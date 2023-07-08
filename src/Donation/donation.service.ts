@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, FindOneOptions } from 'typeorm';
 import { Donation } from './donation.entity';
 
 @Injectable()
@@ -15,7 +15,8 @@ export class DonationService {
   }
 
   async findById(id: number): Promise<Donation> {
-    return this.donationRepository.findOne(id);
+    const findOptions: FindOneOptions<Donation> = { where: { id } };
+    return this.donationRepository.findOne(findOptions);
   }
 
   async create(donation: Donation): Promise<Donation> {
@@ -24,7 +25,7 @@ export class DonationService {
 
   async update(id: number, donation: Donation): Promise<Donation> {
     await this.donationRepository.update(id, donation);
-    return this.donationRepository.findOne(id);
+    return this.findById(id);
   }
 
   async softDelete(id: number): Promise<void> {

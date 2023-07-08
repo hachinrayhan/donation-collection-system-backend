@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'donation' })
 export class Donation {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,5 +17,6 @@ export class Donation {
   @Column()
   amount: number;
 
-  // Add additional columns and relationships as needed
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  time: Date;
 }
